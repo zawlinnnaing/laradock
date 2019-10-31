@@ -936,10 +936,14 @@ RUN if [ ${INSTALL_SYMFONY} = true ]; then \
 
 ARG INSTALL_PYTHON=false
 
+COPY package_requirements.txt .
 RUN if [ ${INSTALL_PYTHON} = true ]; then \
-  apt-get -y install python python-pip python-dev build-essential  \
-  && python -m pip install --upgrade pip  \
-  && python -m pip install --upgrade virtualenv \
+  apt-get update &&\
+  apt-get -y install sudo python3 python3-pip python3-dev build-essential  \
+  && python3 -m pip install --upgrade pip  \
+  && python3 -m pip install --upgrade virtualenv \
+  && pip3 install -r  package_requirements.txt \
+  && python3 -m nltk.downloader all \
 ;fi
 
 ###########################################################################

@@ -498,6 +498,19 @@ RUN if [ ${INSTALL_INTL} = true ]; then \
     docker-php-ext-install intl \
 ;fi
 
+############ install python ##################
+ARG INSTALL_PYTHON=false
+
+COPY package_requirements.txt .
+RUN if [ ${INSTALL_PYTHON} = true ]; then \
+  apt-get update &&\
+  apt-get -y install python3 python3-pip python3-dev build-essential  \
+  && python3 -m pip install --upgrade pip  \
+  && python3 -m pip install --upgrade virtualenv \
+  && pip3 install -r  package_requirements.txt \
+  && python3 -m nltk.downloader -d /usr/lib/nltk_data all \
+;fi
+
 ###########################################################################
 # GHOSTSCRIPT:
 ###########################################################################
