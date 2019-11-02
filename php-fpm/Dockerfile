@@ -202,13 +202,12 @@ ARG INSTALL_PHPREDIS=false
 
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     # Install Php Redis Extension
-    if [ $(php -r "echo PHP_MAJOR_VERSION;") = "5" ]; then \
-      pecl install -o -f redis-4.3.0; \
-    else \
-      pecl install -o -f redis; \
-    fi \
-    && rm -rf /tmp/pear \
-    && docker-php-ext-enable redis \
+    # printf "\n" | pecl install -o -f redis \
+    printf "\n" | curl 'http://pecl.php.net/get/redis-5.0.1.tgz' -o redis-5.0.1.tgz \
+    && pecl install redis-5.0.1.tgz \
+    &&  rm -rf redis-5.0.1.tgz \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis \
 ;fi
 
 ###########################################################################
