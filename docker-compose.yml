@@ -13,6 +13,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   phpmyadmin:
     driver: ${VOLUMES_DRIVER}
+  storage:
+    driver: ${VOLUMES_DRIVER}
 
 services:
   ### Workspace Utilities ##################################
@@ -405,48 +407,48 @@ services:
 
 
   ### WaterMarking ######################
-#  water-marking:
-#    image: water-marking:latest
-#    build:
-#      context: ../../PDF-watermarking
-#    volumes:
-#      - ${APP_STORAGE_PATH_HOST}:/storage
-#    networks:
-#      - frontend
-#      - backend
-#    expose:
-#      - 1003
-#  ### Book Recommendation ##############
-#  book-recommendation:
-#    build:
-#      context: ../../Book-Recommendation
-#    volumes:
-#      - ${APP_STORAGE_PATH_HOST}/app:/storage
-#    networks:
-#      - frontend
-#      - backend
-#    expose:
-#      - 1001
-#  ### Keyword Extraction ################
-#  keyword-extraction:
-#    build:
-#      context: ../../keywords-extraction-from-abstract
-#    volumes:
-#      - ${APP_STORAGE_PATH_HOST}/app:/storage
-#    networks:
-#      - frontend
-#      - backend
-#    expose:
-#      - 1002
+  #  water-marking:
+  #    image: water-marking:latest
+  #    build:
+  #      context: ../../PDF-watermarking
+  #    volumes:
+  #      - ${APP_STORAGE_PATH_HOST}:/storage
+  #    networks:
+  #      - frontend
+  #      - backend
+  #    expose:
+  #      - 1003
+  #  ### Book Recommendation ##############
+  #  book-recommendation:
+  #    build:
+  #      context: ../../Book-Recommendation
+  #    volumes:
+  #      - ${APP_STORAGE_PATH_HOST}/app:/storage
+  #    networks:
+  #      - frontend
+  #      - backend
+  #    expose:
+  #      - 1001
+  #  ### Keyword Extraction ################
+  #  keyword-extraction:
+  #    build:
+  #      context: ../../keywords-extraction-from-abstract
+  #    volumes:
+  #      - ${APP_STORAGE_PATH_HOST}/app:/storage
+  #    networks:
+  #      - frontend
+  #      - backend
+  #    expose:
+  #      - 1002
 
-### Flask python server
+  ### Flask python server
   flask:
     build:
       context: ../scripts/keywords-extraction-from-abstract/
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      - ${APP_CODE_PATH_HOST}/storage/pdf:/storage
     networks:
       - frontend
     environment:
