@@ -444,7 +444,7 @@ services:
   ### Flask python server
   flask:
     build:
-      context: ../scripts/keywords-extraction-from-abstract/
+      context: ../python-service/Digital-Watermarking-Book-Recommendation-and-Keyword-Extraction-using-flask
     ports:
       - "5000:5000"
     volumes:
