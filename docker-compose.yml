@@ -448,7 +448,9 @@ services:
     ports:
       - "5000:5000"
     volumes:
+      - ${PYTHON_CODE_PATH_HOST}:/app
       - ${APP_CODE_PATH_HOST}/storage/pdf:/storage
+      - ${APP_CODE_PATH_HOST}/storage/app/documents:/books
     networks:
       - frontend
     environment:
