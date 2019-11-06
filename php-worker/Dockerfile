@@ -23,8 +23,16 @@ RUN apk --update add wget \
   libgsasl-dev \
   supervisor
 
+COPY ["mcrypt-1.0.2.tgz","memcached-3.1.4.tgz","./"]
+
+COPY mongodb-1.6.0.tgz .
+
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml pcntl
-RUN pecl channel-update pecl.php.net && pecl install ../tar-files/memcached-3.1.4.tgz mcrypt-1.0.1 mongodb && docker-php-ext-enable memcached mongodb
+#RUN pecl channel-update pecl.php.net && pecl install memcached mcrypt-1.0.1 mongodb \
+#     && docker-php-ext-enable memcached mongodb
+RUN pear install memcached-3.1.4.tgz \
+    && pear install mcrypt-1.0.2.tgz \
+    && pear install mongodb-1.6.0.tgz && docker-php-ext-enable memcached mongodb
 
 # Add a non-root user:
 ARG PUID=1000
